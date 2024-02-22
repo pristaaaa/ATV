@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Astro Cricket HD</title>
+<!DOCTYPE html>  
+<html lang="en">  
+<title>TNT Sports - 4</title>
     <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
     <script src="https://cdn.jsdelivr.net/npm/shaka-player/dist/shaka-player.ui.min.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/shaka-player/dist/controls.min.css" rel="stylesheet">
+</head>
+<body bgcolor="black" style="margin:0"> 
     <style>
         body {
             margin: 0;
@@ -52,71 +52,44 @@
             <img id="ad-image" src="https://i.im.ge/2024/02/22/gmDGX0.IMG-20240222-100640-889.jpg" alt="Ad Poster">
         </a>
     </div>
+<center>
+   
+ <div data-shaka-player-container="" style="width: 100%; height: 100%;" class="shaka-mobile shaka-video-container" shaka-controls="true">
+        <video poster="https://i.ibb.co/MBLyccg/Cric-streaming-tnt4.jpg" autoplay="" data-shaka-player="" id="video" style="width: 100%; height: 100%;" class="shaka-video"</video>
+    <canvas class="shaka-canvas-container"></canvas><div class="shaka-controls-container" shown="true"><div class="shaka-scrim-container"></div><div class="shaka-hidden-fast-forward-container"><div class="shaka-fast-foward-container"><span>0s</span><span class="shaka-forward-rewind-container-icon">fast_forward</span></div></div><div class="shaka-hidden-rewind-container"><div class="shaka-rewind-container"><span>0s</span><span class="shaka-forward-rewind-container-icon">fast_rewind</span></div></div><div class="shaka-server-side-ad-container"></div><div class="shaka-bottom-controls shaka-no-propagation"><div class="shaka-ad-controls shaka-hidden"><button type="button" class="shaka-fullscreen-button material-icons-round shaka-tooltip" aria-label="Full screen">fullscreen</button><div class="shaka-ad-position shaka-hidden"><span class="shaka-ad-position-span"></span></div><div class="shaka-ad-counter"><span class="shaka-ad-counter-span"></span></div></div>
+</center>
 
-    <div id="video-container">
-        <div data-shaka-player-container="" class="shaka-mobile shaka-video-container" shaka-controls="true">
-            <video poster="https://linear-poster.astro.com.my/prod/poster/ivp_default_10000229_IVP_LAND_586x330.jpg" autoplay="" data-shaka-player="" id="video" class="shaka-video"></video>
-        </div>
-    </div>
+<script>
+ if(confirm("Join Our Telegram Channel @criccoder")) { window.location.href = "https://telegram.me/criccoder" }
+const manifestUri = "https://linear114-ie-dash1-prd-ak.cdn.skycdp.com/016a/Content/DASH_003_sd/Live/channel(gcptntsport4)/manifest_sd.mpd";
 
-    <script>
-        if (confirm("Join Our Telegram Channel For More Links")) {
-            window.location.href = "https://t.me/+vi_UBdhOsN5jYzY1"
+async function init() {
+    const video = document.getElementById('video');
+    const ui = video['ui'];
+    const controls = ui.getControls();
+    const player = controls.getPlayer();
+    window.player = player;
+    window.ui = ui;
+
+player.configure({
+    drm: {
+        "clearKeys": {
+            '0009df430980c91904926a291cf321fb': '1564522f5b2d62bb5099ffb144f81e1e'
         }
+    }
+});
+player.addEventListener('error', onPlayerErrorEvent);
+controls.addEventListener('error', onUIErrorEvent);
+    
+try { await player.load(manifestUri); console.log('The video has now been loaded!'); }
+catch (error) { onPlayerError(error); }}
 
-        const manifestUri = "https://linearjitp-playback.astro.com.my/dash-wv/linear/2504/default.mpd";
+function onPlayerErrorEvent(errorEvent) { onPlayerError(event.detail); }
+function onPlayerError(error) { console.error('Error code', error.code, 'object', error); }
+function onUIErrorEvent(errorEvent) { onPlayerError(event.detail); }
+function initFailed(errorEvent) { console.error('Unable to load the UI library!'); }document.addEventListener('shaka-ui-loaded', init);
+document.addEventListener('shaka-ui-load-failed', initFailed);
 
-        async function init() {
-            const video = document.getElementById('video');
-            const ui = video['ui'];
-            const controls = ui.getControls();
-            const player = controls.getPlayer();
-            window.player = player;
-            window.ui = ui;
+</script>
 
-            player.configure({
-                drm: {
-                    "clearKeys": {
-                        '03c2e0af2f8159f9f0ce9b5dbc865f10': 'cd84ed136b0cc71f8ab8cd4d4f6a2e4c'
-                    }
-                }
-            });
-
-            player.addEventListener('error', onPlayerErrorEvent);
-            controls.addEventListener('error', onUIErrorEvent);
-
-            try {
-                await player.load(manifestUri);
-                console.log('The video has now been loaded!');
-            } catch (error) {
-                onPlayerError(error);
-            }
-        }
-
-        function onPlayerErrorEvent(errorEvent) {
-            onPlayerError(event.detail);
-        }
-
-        function onPlayerError(error) {
-            console.error('Error code', error.code, 'object', error);
-        }
-
-        function onUIErrorEvent(errorEvent) {
-            onPlayerError(event.detail);
-        }
-
-        function initFailed(errorEvent) {
-            console.error('Unable to load the UI library!');
-        }
-
-        document.addEventListener('shaka-ui-loaded', init);
-        document.addEventListener('shaka-ui-load-failed', initFailed);
-    </script>
-    <style type="text/css">* {
-            user-select: auto !important;
-            -webkit-user-select: auto !important;
-        }</style>
-    <link href="https://cdn.jsdelivr.net/npm/shaka-player/dist/controls.min.css" rel="stylesheet">
-</body>
-
-</html>
+</body></html>
