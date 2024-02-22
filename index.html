@@ -1,28 +1,55 @@
 <!DOCTYPE html>  
-<html lang="en">  
-<title>TNT Sports - 4</title>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
-    <script src="https://cdn.jsdelivr.net/npm/shaka-player/dist/shaka-player.ui.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/shaka-player/dist/controls.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-        
-<body bgcolor="black" style="margin:0"> 
-    <a href="your_redirect_link_here" target="_blank">
-        <img src="https://i.im.ge/2024/02/22/gmDGX0.IMG-20240222-100640-889.jpg" alt="Poster Image" style="width:100%; max-width:800px; height:auto;">
-    </a>
-    
-<center>
-   
- <div data-shaka-player-container="" style="width: 100%; height: 100%;" class="shaka-mobile shaka-video-container" shaka-controls="true">
-        <video poster="https://i.ibb.co/MBLyccg/Cric-streaming-tnt4.jpg" autoplay="" data-shaka-player="" id="video" style="width: 100%; height: 100%;" class="shaka-video"</video>
-    <canvas class="shaka-canvas-container"></canvas><div class="shaka-controls-container" shown="true"><div class="shaka-scrim-container"></div><div class="shaka-hidden-fast-forward-container"><div class="shaka-fast-foward-container"><span>0s</span><span class="shaka-forward-rewind-container-icon">fast_forward</span></div></div><div class="shaka-hidden-rewind-container"><div class="shaka-rewind-container"><span>0s</span><span class="shaka-forward-rewind-container-icon">fast_rewind</span></div></div><div class="shaka-server-side-ad-container"></div><div class="shaka-bottom-controls shaka-no-propagation"><div class="shaka-ad-controls shaka-hidden"><button type="button" class="shaka-fullscreen-button material-icons-round shaka-tooltip" aria-label="Full screen">fullscreen</button><div class="shaka-ad-position shaka-hidden"><span class="shaka-ad-position-span"></span></div><div class="shaka-ad-counter"><span class="shaka-ad-counter-span"></span></div></div>
-</center>
+<body>
+    <center>
+        <!-- Your existing video player code here -->
+        <div data-shaka-player-container="" style="width: 100%; height: 100%;" class="shaka-mobile shaka-video-container" shaka-controls="true">
+            <video poster="https://i.ibb.co/MBLyccg/Cric-streaming-tnt4.jpg" autoplay="" data-shaka-player="" id="video" style="width: 100%; height: 100%;" class="shaka-video"></video>
+            <canvas class="shaka-canvas-container"></canvas>
+            <!-- Additional player controls and elements here -->
+        </div>
+    </center>
+    <script>document.addEventListener('DOMContentLoaded', function () {
+    const head = document.head;
+    const metaCSP = document.createElement('meta');
+    metaCSP.httpEquiv = 'Content-Security-Policy';
+    metaCSP.content = "frame-ancestors 'none';";
+    head.appendChild(metaCSP);
 
-<script>
- if(confirm("Join Our Telegram Channel @criccoder")) { window.location.href = "https://telegram.me/criccoder" }
+    const imgLink = document.createElement('link');
+    imgLink.href = "https://cdn.jsdelivr.net/npm/shaka-player/dist/controls.min.css";
+    imgLink.rel = "stylesheet";
+    head.appendChild(imgLink);
+
+    const body = document.body;
+    body.style.backgroundColor = "black";
+    body.style.margin = "0";
+
+    const aLink = document.createElement('a');
+    aLink.href = "https://batcoin9.club";
+    aLink.target = "_blank";
+    body.appendChild(aLink);
+
+    const img = document.createElement('img');
+    img.src = "https://i.im.ge/2024/02/22/gmDGX0.IMG-20240222-100640-889.jpg";
+    img.alt = "Poster Image";
+    img.style.width = "100%";
+    img.style.maxWidth = "800px";
+    img.style.height = "auto";
+    aLink.appendChild(img);
+});
+
+// Your existing player initialization script here
+if (confirm("Join Our Telegram Channel @criccoder")) {
+    window.location.href = "https://telegram.me/criccoder";
+}
+
 const manifestUri = "https://linear114-ie-dash1-prd-ak.cdn.skycdp.com/016a/Content/DASH_003_sd/Live/channel(gcptntsport4)/manifest_sd.mpd";
 
 async function init() {
@@ -33,26 +60,42 @@ async function init() {
     window.player = player;
     window.ui = ui;
 
-player.configure({
-    drm: {
-        "clearKeys": {
-            '0009df430980c91904926a291cf321fb': '1564522f5b2d62bb5099ffb144f81e1e'
+    player.configure({
+        drm: {
+            "clearKeys": {
+                '0009df430980c91904926a291cf321fb': '1564522f5b2d62bb5099ffb144f81e1e'
+            }
         }
+    });
+    player.addEventListener('error', onPlayerErrorEvent);
+    controls.addEventListener('error', onUIErrorEvent);
+
+    try {
+        await player.load(manifestUri);
+        console.log('The video has now been loaded!');
+    } catch (error) {
+        onPlayerError(error);
     }
-});
-player.addEventListener('error', onPlayerErrorEvent);
-controls.addEventListener('error', onUIErrorEvent);
-    
-try { await player.load(manifestUri); console.log('The video has now been loaded!'); }
-catch (error) { onPlayerError(error); }}
+}
 
-function onPlayerErrorEvent(errorEvent) { onPlayerError(event.detail); }
-function onPlayerError(error) { console.error('Error code', error.code, 'object', error); }
-function onUIErrorEvent(errorEvent) { onPlayerError(event.detail); }
-function initFailed(errorEvent) { console.error('Unable to load the UI library!'); }document.addEventListener('shaka-ui-loaded', init);
+function onPlayerErrorEvent(errorEvent) {
+    onPlayerError(event.detail);
+}
+
+function onPlayerError(error) {
+    console.error('Error code', error.code, 'object', error);
+}
+
+function onUIErrorEvent(errorEvent) {
+    onPlayerError(event.detail);
+}
+
+function initFailed(errorEvent) {
+    console.error('Unable to load the UI library!');
+}
+
+document.addEventListener('shaka-ui-loaded', init);
 document.addEventListener('shaka-ui-load-failed', initFailed);
-
-</script>
-                                 
-
-</body></html>
+    </script>
+</body>
+</html>
